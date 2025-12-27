@@ -1,5 +1,12 @@
 "use client";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import ImageCard from "@/components/ui/image-card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
+import { Phone } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef } from "react";
 export default function Home() {
@@ -9,9 +16,10 @@ export default function Home() {
 		console.log("Page in view:", isInView);
 	}, [isInView]);
 	return (
-		<main className="flex min-h-screen items-center justify-center flex-col bg-zinc-50">
-			<div className="min-h-screen w-full flex flex-col justify-center items-center bg-[hsl(173,58%,32%)]">
-				<motion.div ref={ref} className="text-9xl text-[#f8f9fa] flex">
+		<main className="flex min-h-screen items-center justify-center flex-col bg-zinc-50 max-w-640 mx-auto">
+			<div ref={ref} className="relative max-h-270 not-2k:min-h-screen 2k:h-screen w-full flex flex-col lg:gap-10 gap-6 justify-center items-center bg-linear-to-b from-teal-900 to-teal-700">
+				<div className={cn("absolute inset-0 z-0 opacity-25", "bg-size-[40px_40px]", "bg-[linear-gradient(90deg,var(--color-neutral-300)_1px,transparent_1px),linear-gradient(0deg,var(--color-neutral-300)_1px,transparent_1px)]", "mask-[radial-gradient(ellipse_at_center,black,transparent_95%)]")} />
+				<motion.div className="z-1 lg:text-9xl md:text-8xl sm:text-7xl text-5xl text-[#f8f9fa] flex">
 					{isInView &&
 						"Faebricate.".split("").map((char, i) => (
 							<motion.span key={i} className="flex font-semibold" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05, ease: "backOut", type: "tween" }}>
@@ -19,9 +27,82 @@ export default function Home() {
 							</motion.span>
 						))}
 				</motion.div>
-				<Button>TEST</Button>
+				<motion.div className="z-1 lg:text-xl text-lg text-[#f8f9fa] flex flex-wrap md:gap-x-2 gap-x-2 max-w-sm w-4/5 justify-center">
+					{isInView &&
+						"Jasa 3D printing yang berlokasi di Kota Malang".split(" ").map((current, i) => (
+							<motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 + i * 0.05, ease: "backOut", type: "tween" }} className="flex">
+								{current == "" ? <span>&nbsp;</span> : current}
+							</motion.div>
+						))}
+				</motion.div>
+				{isInView && (
+					<motion.div className="z-1" key={"kontak-button"} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7, ease: "backOut", type: "tween" }}>
+						<Button asChild size={"lg"} variant={"neutral"}>
+							<a href="#kontak">
+								<Phone /> Kontak
+							</a>
+						</Button>
+					</motion.div>
+				)}
 			</div>
-			<div className="min-h-screen w-full flex justify-center items-center"></div>
+			<div className="2k:max-h-270 not-2k:min-h-screen 2k:h-screen border-t-4 pt-20 w-full flex flex-col justify-start lg:gap-10 gap-6 items-center bg-neutral-100">
+				<div className="md:text-4xl sm:text-3xl text-2xl text-teal-700 text-center">Apa saja yang bisa kami tawarkan?</div>
+				<div className="text-center w-4/5 max-w-xl text-teal-700 lg:text-xl sm:text-lg">Kami menyediakan layanan 3D printing untuk kebutuhan prototyping atau untuk proyek kustom Anda.</div>
+				<div className="w-full flex flex-wrap px-5 py-5 2xl:py-20 justify-center lg:gap-10 gap-6 items-stretch">
+					<Card className="card-custom">
+						<img src="https://hips.hearstapps.com/hmg-prod/images/flowers-trees-and-bushes-reach-their-peak-of-full-bloom-in-news-photo-1678292967.jpg?resize=300:*" alt="Layanan Faebricate" className="w-full h-auto" />
+						<CardContent className="flex flex-col">
+							<div className="flex w-full justify-between items-center mb-4">
+								<div className="text-xl font-medium">PLA+</div>
+								<div className="flex gap-1">
+									<Badge variant={"neutral"}>Filament</Badge>
+									<Badge variant={"neutral"}>800/g</Badge>
+								</div>
+							</div>
+							<div>kuat, tahan benturan lebih baik, mudah dicetak dan terjangkau. Cocok untuk prototipe.</div>
+						</CardContent>
+					</Card>
+					<Card className="card-custom">
+						<img src="https://hips.hearstapps.com/hmg-prod/images/flowers-trees-and-bushes-reach-their-peak-of-full-bloom-in-news-photo-1678292967.jpg?resize=300:*" alt="Layanan Faebricate" className="w-full h-auto" />
+						<CardContent className="flex flex-col">
+							<div className="flex w-full justify-between items-center mb-4">
+								<div className="text-xl font-medium">PETG</div>
+								<div className="flex gap-1">
+									<Badge variant={"neutral"}>Filament</Badge>
+									<Badge variant={"neutral"}>1200/g</Badge>
+								</div>
+							</div>
+							<div>Kuat, fleksibel, tahan air, dan tahan panas. Cocok untuk outdoor.</div>
+						</CardContent>
+					</Card>
+					<Card className="card-custom">
+						<img src="https://hips.hearstapps.com/hmg-prod/images/flowers-trees-and-bushes-reach-their-peak-of-full-bloom-in-news-photo-1678292967.jpg?resize=300:*" alt="Layanan Faebricate" className="w-full h-auto" />
+						<CardContent className="flex flex-col">
+							<div className="flex w-full justify-between items-center mb-4">
+								<div className="text-xl font-medium">ABS - like</div>
+								<div className="flex gap-1">
+									<Badge variant={"neutral"}>Resin</Badge>
+									<Badge variant={"neutral"}>2500/g</Badge>
+								</div>
+							</div>
+							<div>Detail tinggi dan permukaan halus. Cocok untuk miniatur, model detail, prototipe visual.</div>
+						</CardContent>
+					</Card>
+					<Card className="card-custom">
+						<img src="https://hips.hearstapps.com/hmg-prod/images/flowers-trees-and-bushes-reach-their-peak-of-full-bloom-in-news-photo-1678292967.jpg?resize=300:*" alt="Layanan Faebricate" className="w-full h-auto" />
+						<CardContent className="flex flex-col">
+							<div className="flex w-full justify-between items-center mb-4">
+								<div className="text-xl font-medium">Tough</div>
+								<div className="flex gap-1">
+									<Badge variant={"neutral"}>Resin</Badge>
+									<Badge variant={"neutral"}>5000/g</Badge>
+								</div>
+							</div>
+							<div>Detail tinggi, kuat, dan tahan benturan. Cocok untuk prototipe fungsional dan bagian mekanis.</div>
+						</CardContent>
+					</Card>
+				</div>
+			</div>
 		</main>
 	);
 }
