@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import "mapbox-gl/dist/mapbox-gl.css";
-
+import { Analytics } from "@vercel/analytics/next"
 const SpaceGrotesk = Space_Grotesk({
 	variable: "--font-space-grotesk",
 	subsets: ["latin"],
@@ -20,7 +20,10 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${SpaceGrotesk.variable} antialiased font-(family-name:--font-space-grotesk) scroll-smooth`}>{children}</body>
+			<body className={`${SpaceGrotesk.variable} antialiased font-(family-name:--font-space-grotesk) scroll-smooth`}>
+				{children}
+				<Analytics />
+			</body>
 		</html>
 	);
 }
