@@ -11,7 +11,6 @@ import Lenis from "lenis";
 import mapboxgl from "mapbox-gl";
 import { useEffect, useRef } from "react";
 
-const MAPBOX_ACCESS_TOKEN = "pk.eyJ1IjoiZmFlZXN0IiwiYSI6ImNtbnFxNnRnejA5eWgydW40eDNtaHhxNjcifQ.AqUdKkkEmaGuFHjYMn-ADA";
 const FAEBRICATE_COORDINATES: [number, number] = [112.59618291280333, -7.914592712527458];
 const materials = [
 	{
@@ -96,7 +95,13 @@ export default function Home() {
 			return;
 		}
 
-		mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
+		const mapboxToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
+		if (!mapboxToken) {
+			console.warn("Missing NEXT_PUBLIC_MAPBOX_TOKEN");
+			return;
+		}
+
+		mapboxgl.accessToken = mapboxToken;
 
 		const map = new mapboxgl.Map({
 			container: mapContainerRef.current,
